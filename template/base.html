@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Library Mangment System </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" 
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href=" {% static 'assists/css/all.min.css'%}">
+        <link rel="stylesheet" href=" {% static 'http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css'%}">
+        <link rel="stylesheet" href=" {% static 'assists/css/adminlte.css'%}">
+        <link href=" {% static 'https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700'%}" rel="stylesheet">
+    </head>
+    <body  class="hold-transition sidebar-mini">
+
+        {% include 'components/nav.html' %}
+        {% include 'components/sidebar.html' %}
+        {% block content %}
+        {% endblock content %}
+        {% include 'components/footer.html' %}
+        </div>
+
+
+        <script src="{% static 'assists/js/jquery.min.js'%}"></script>
+        <script src="{% static 'assists/js/bootstrap.bundle.min.js'%}"></script>
+        <script src="{% static 'assists/js/adminlte.js'%}"></script>
+        <script src="{% static 'assists/js/Chart.min.js'%}"></script>
+        <script src="{% static 'assists/js/demo.js'%}"></script>
+
+        <script>
+        $(document).ready(function(){
+            $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+            });
+        });
+        const form=document.getElementById('cat');
+        const addcat=document.getElementById('addcat');
+        const backcat=document.getElementById('backcat');
+        addcat.addEventListener('click',()=>{
+            if(form.style.display!='none'){form.style.display='none';}
+            else{form.style.display='block';}
+        });
+        backcat.addEventListener('click',()=>{if(form.style.display!='none'){form.style.display='none';}});
+
+
+
+        {% for book in books%}
+            $(".category{{book.category.id}}").click(function(){
+                $(".hideBook").hide()
+                $(".book{{book.category.id}}").show()
+            });
+
+            $(".status{{book.status}}").click(function(){
+                $(".hideBook").hide()
+                $(".book{{book.status}}").show()
+            });
+        {% endfor %}
+        </script>
+        <script>
+        
+        
+
+
+        $(function () {
+        'use strict'
+        
+        var ticksStyle = {
+            fontColor: '#495057',
+            fontStyle: 'bold'
+        }
+
+        var mode      = 'index'
+        var intersect = true
+
+        var $salesChart = $('#sales-chart')
+
+        var salesChart  = new Chart($salesChart, {
+
+            type   : 'bar',
+            
+            data   : {
+
+            labels  : [
+                
+
+                'Profit Details',
+
+            ],
+
+
+            datasets: [
+                {
+                backgroundColor: '#007bff',
+                borderColor    : '#007bff',
+                data           : [ 
+                    '{{profitSold}}',
+                ]
+                },
+                {
+                backgroundColor: '#ced4da',
+                borderColor    : '#ced4da',
+                data           : [ 
+                        '{{profitRental}}',
+                ]
+                }
+            ]
+            },
+
+        
+        
+        options: {
+            maintainAspectRatio: false,
+            tooltips           : {
+                mode     : mode,
+                intersect: intersect
+            },
+            hover              : {
+                mode     : mode,
+                intersect: intersect
+            },
+            legend             : {
+                display: false
+            },
+            scales             : {
+                yAxes: [{
+                // display: false,
+                gridLines: {
+                    display      : true,
+                    lineWidth    : '4px',
+                    color        : 'rgba(0, 0, 0, .2)',
+                    zeroLineColor: 'transparent'
+                },
+                ticks    : $.extend({
+                    beginAtZero: true,
+
+                    // Include a dollar sign in the ticks
+                    callback: function (value, index, values) {
+                    if (value >= 1000) {
+                        value /= 1000
+                        value += 'k'
+                    }
+                    return '$' + value
+                    }
+                }, ticksStyle)
+                }],
+                xAxes: [{
+                display  : true,
+                gridLines: {
+                    display: false
+                },
+                ticks    : ticksStyle
+                }]
+            }
+            }
+        });
+        
+
+        var pieChart = document.getElementById('visitors-chart').getContext('2d');
+        var myPieChart = new Chart(pieChart, {
+            type: 'pie',
+            data: {
+            datasets: [{
+                data: ['{{availableBooks}}','{{soldBooks}}','{{rentalBooks}}'],
+                
+                backgroundColor :["#27c100","#f3545d","#fdaf4b"],
+                borderWidth: 10,
+                
+            }],
+            labels: ['Available', 'Sold', 'Borrowed'] 
+            },
+            options : {
+            responsive: true, 
+            maintainAspectRatio: false,
+            legend: {
+                position : 'bottom',
+                labels : {
+                fontColor: '#000',
+                fontSize: 15,
+                usePointStyle : true,
+                padding:30
+                }
+            },
+            pieceLabel: {
+                render: 'percentage',
+                fontColor: 'white',
+                fontSize: 14,
+            },
+
+
+            }
+        })
+
+        })
+
+
+        
+        </script>
+
+    </body>
+</html>

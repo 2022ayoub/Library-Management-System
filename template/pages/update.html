@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="wrapper" >
+
+    <!-- Content Wrapper. Contains page content -->
+    <div   class="content-wrapper" style="height: fit-content;">
+      <!-- Content Header (Page header) -->
+      <div  class="card card-primary" style="width:60%;position:relative;left:20%;" >
+        <div class="card-header">
+          <h3 class="card-title" style="text-align:center;width: 100%;font-weight:700;">Update the book </h3>
+        </div>
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form  method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-body">
+          {{form}}
+        </div>
+        <!-- /.card-body -->
+  
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+
+
+{% endblock content %}

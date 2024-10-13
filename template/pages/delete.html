@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="wrapper" style="position: relative;">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div   class="content-wrapper">
+      <!-- Content Header (Page header) -->
+    <div  class="card card-danger" style="width:50%;position:absolute;top:50%;left:50%;translate: -30% -50%;" >
+      <div class="card-header">
+        <h3 class="card-title" style="text-align:center;width: 100%;font-weight:700;">Delete the book </h3>
+      </div>
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form  method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row" >
+          <p class="p-3" style="text-align: center;width:100%;font-weight: 600;">Do you really want to delete the book?</p>
+        </div>
+        <!-- /.card-body -->
+  
+        <div class="card-footer" style="display:flex;justify-content:center;">
+          <button type="submit" class="btn btn-danger mr-2">delete</button>
+          <a href='{% url "index" %}' type="button" class="btn btn-success ml-2">go_back</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+    

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content%}
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div   class="content-wrapper p-5">
+      <!-- Content Header (Page header) -->
+
+              <div class="row mb-4 justify-content-center">
+                <div class="col-sm-6" style="text-align: center;">
+                  <h1>Books</h1>
+                </div>
+              </div>
+          </section>
+      
+          <!-- Main content -->
+          <section class="content">                  
+            <!-- Default box -->
+            <div class="card card-solid">
+              <div class="card-body pb-0">
+                <div class="row d-flex align-items-stretch">
+                {% for book in books %}
+                  
+                  <div   class="col-12 col-sm-6 col-md-4    hideBook book{{book.category.id}} book{{book.status}}"
+                          style="cursor: pointer;transition: 0.6s linear;" onmouseover="this.style.scale='1.02'"
+                             onmouseout="this.style.scale='1'">
+                    <div  id="" class="card bg-light">
+                      <div  class="card-header text-muted border-bottom-0">
+                        <span style="font-size: 18px;font-weight: 600;">Category :</span>
+                        {{book.category}}
+                      </div>
+                      <div class="card-body pt-0">
+                        <div class="row">
+                          <div class="col-7">
+                            <h2 class="lead"><span style="font-size: 18px;font-weight: 600;">Title : </span><b>{{book.title}}</b></h2>
+                            <ul class="  fa-ul text-muted">
+                              <li class="small"><span class="">status :</span> {{book.status}}</li>
+                              {% if book.price %}
+                              <li class="small"><span class="">Price :</span> {{book.price}}</li>
+                              {% elif book.rental_price_day %}
+                              <li class="small"><span class="">Price per day :</span> {{book.rental_price_day}}</li>
+                              {% endif %}
+                            </ul>
+                          </div>
+                          <div class="col-5 text-center">
+                            {% if book.bookImg%}
+                              <img style="height: 120px; width: 120px;"  src="{{book.bookImg.url}}" alt="" 
+                              class="img-circle img-fluid">
+                            {% else %}
+                              <img style="height: 120px; width: 120px;"  src="{% static 'imgs/defaultBook.jpg' %}" alt="" 
+                              class="img-circle img-fluid">
+                            {% endif %}
+                            </div>
+                        </div>
+                      </div>
+                      <div class="card-footer">
+                        <div class="text-left">
+                          <a href="{% url 'update' book.id %}" class="btn btn-sm btn-primary">
+                            <i class="fas fa-book"></i> Update
+                          </a>
+                          <a href="{% url 'delete' book.id %}" class="btn btn-sm bg-danger">
+                            <i class="fas fa-trash"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    
+                  </div>
+                   <!-- end of the book-->
+                {% endfor %}
+                </div>
+              </div>
+              <!-- /.card-body -->
+
+              <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+      
+          </section>
+          <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+      
+    </div>
+    <!-- /.content-wrapper -->
+  </div>
+
+{% endblock content%}
